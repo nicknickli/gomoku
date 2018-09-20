@@ -1,3 +1,6 @@
 #handles option twoplayers
-def twoPlayers(menu, oldFrame):
-    return 2
+from gamegraphics import *
+from gamemechs import *
+
+def twoPlayers(boardSize):
+    Board(boardSize)

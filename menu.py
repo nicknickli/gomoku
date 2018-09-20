@@ -1,9 +1,11 @@
-#handles main menu
+#handles all menu interactions
 from Tkinter import *
 import ttk
 from singleplayer import singlePlayer
 from twoplayer import twoPlayers
+from gameboard import startGame
 
+#runs the main menu
 def mainMenu(menuWindow, oldFrame = 0):
     #clear old frame
     if oldFrame != 0:
@@ -25,9 +27,11 @@ def mainMenu(menuWindow, oldFrame = 0):
     #set menu
     menuFrame.pack()
 
+#quits window
 def quit(menuWindow):
     menuWindow.destroy()
 
+#runs the board size options
 def boardSizeMenu(menuWindow, oldFrame, playerNum):
     #clearing old menu frame
     if oldFrame != 0:
@@ -54,10 +58,11 @@ def boardSizeMenu(menuWindow, oldFrame, playerNum):
     boardLarge.pack()
     boardFrame.pack()
 
+#starts the game using board size user selected
 def boardSize(value, menuWindow, boardFrame, playerNum):
     if value == 1:
-        startGame(playerNum, 15)
+        startGame(playerNum, 15, menuWindow)
     elif value == 2:
-        startGame(playerNum, 17)
+        startGame(playerNum, 17, menuWindow)
     else:
         boardSizeMenu(menuWindow, boardFrame)

@@ -1,3 +1,6 @@
 #handles option singleplayer
-def singlePlayer():
-    return 1
+from gamegraphics import *
+from gamemechs import *
+
+def singlePlayer(boardSize):
+    Board(boardSize)
