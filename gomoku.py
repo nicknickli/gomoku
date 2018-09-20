@@ -2,7 +2,10 @@
 Gomoku (5 in a Row) implemented with Python"""
 
 #Main function to run Gomoku
-from menu import menu
+from menu import mainMenu
 from Tkinter import *
 menuWindow = Tk()
-menu(menuWindow)
+menuWindow.title("Gomoku")
+menuWindow.geometry("500x500")
+mainMenu(menuWindow)
+menuWindow.mainloop()

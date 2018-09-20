@@ -2,11 +2,14 @@
 from numpy import zeros
 from Tkinter import *
 import ttk
+import menu
 
-def boardSizeMenu(menuWindow):
+def boardSizeMenu(menuWindow, oldFrame):
+    #clearing old menu frame
+    oldFrame.pack_forget()
+
     #setting up menu
     boardFrame = Frame(menuWindow, width = 100, height = 100)
-    boardFrame.tkraise()
 
     #title
     titleText = StringVar()
@@ -17,22 +20,22 @@ def boardSizeMenu(menuWindow):
     board = StringVar()
     boardSmall = Radiobutton(boardFrame, text = "15 x 15", value = 1, variable = board)
     boardLarge = Radiobutton(boardFrame, text = "17 x 17", value = 2, variable = board)
-    confirmButton = Button(boardFrame, text = "Confirm")
-    confirmButton.bind("<Button-1>", lambda x: boardSize(event, board.get()))
-    backButton = Button(boardFrame, text = "Back")
+    Button(boardFrame, text = "Confirm", command = lambda: boardSize(board.get(), menuWindow, boardFrame)).pack()
+    Button(boardFrame, text = "Back", command = lambda: menu.mainMenu(menuWindow, boardFrame)).pack()
     #CAUTION: Can possibly overload menu window with lots of frames
-    backButton.bind("<Button-1>", lambda x: menu(menuWindow))
 
     #set menu
     boardSmall.pack()
     boardLarge.pack()
     boardFrame.pack()
 
-def boardSize(event, value):
+def boardSize(value, menuWindow, boardFrame):
     if value == 1:
+        print("1")
         return numpy.zeros(15, 15)
     elif value == 2:
         return numpy.zeros(17, 17)
+        print("2")
     else:
         print("Please select a board size")
-        boardSizeMenu()
+        boardSizeMenu(menuWindow, boardFrame)

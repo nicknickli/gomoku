@@ -1,3 +1,6 @@
 #handles option twoplayers
-def twoPlayers(event, menu):
+from boardsize import boardSizeMenu
+def twoPlayers(menu, oldFrame):
+    menuFrame.pack_forget()
+    boardSizeMenu(menu, oldFrame)
     menu.destroy()
