@@ -1,6 +1,6 @@
 #handles games graphics, such as board and pieces
 from Tkinter import *
-from numpy import full
+from gamemechs import *
 
 class Board():
     player = 0
@@ -19,7 +19,7 @@ class Board():
         self.gameWindow.geometry(str(pixels) + "x" + str(pixels))
         self.canvasWidth = boardSize * self.squareSize
         self.canvasHeight = boardSize * self.squareSize
-        self.boardGrid = full((boardSize, boardSize), 2)
+        self.data = GameMechs(boardSize)
 
         self.canvas = Canvas(self.gameWindow, width = self.canvasWidth, height = self.canvasHeight, bg = "PeachPuff2")
         for i in range(boardSize + 1):
@@ -42,7 +42,7 @@ class Board():
         return pixel // self.squareSize
 
     def placePiece(self, boxX, boxY):
-        if self.valid(boxX, boxY):
+        if self.data.valid(boxX, boxY):
             topX = boxX * self.squareSize
             topY = boxY * self.squareSize
             botX = topX + self.squareSize
@@ -51,11 +51,6 @@ class Board():
                 self.canvas.create_oval(topX, topY, botX, botY, fill = "black")
             else:
                 self.canvas.create_oval(topX, topY, botX, botY, fill = "white")
-            self.boardGrid[boxX][boxY] = self.player
+            self.data.boardGrid[boxX][boxY] = self.player
+            self.data.checkWin(boxX, boxY, self.player)
             self.player = abs(self.player - 1)
-
-    def valid(self, boxX, boxY):
-        if self.boardGrid[boxX][boxY] == 2:
-            return True
-        else:
-            return False
