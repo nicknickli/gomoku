@@ -52,5 +52,5 @@ class Board():
             else:
                 self.canvas.create_oval(topX, topY, botX, botY, fill = "white")
             self.data.boardGrid[boxX][boxY] = self.player
-            self.data.checkWin(boxX, boxY, self.player)
+            self.data.checkWin(boxX, boxY, self.player, self.canvas)
             self.player = abs(self.player - 1)

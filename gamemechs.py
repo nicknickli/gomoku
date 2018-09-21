@@ -1,5 +1,7 @@
 #handles game mechanics functions
 from numpy import full
+from Tkinter import *
+import ttk
 
 class GameMechs():
 
@@ -14,23 +16,14 @@ class GameMechs():
         else:
             return False
 
-    #take in a player input and places the piece on the board accordingly
-    def takeTurn(player, input, board):
-        #auto switch player by returning player? or returning input
-        return 0
-
-    #places piece according to player input
-    def placePiece(player, input, board):
-        return 0
-
     #check win condition each time piece is played
-    def checkWin(self, boxX, boxY, player):
+    def checkWin(self, boxX, boxY, player, canvas):
         for dirX in range(-1, 2):
             for dirY in range(-1, 2):
                 if dirX == 0 and dirY == 0:
                     continue
                 if self.checkAdj(boxX, boxY, dirX, dirY, player, 1):
-                    self.winner(player)
+                    self.winner(player, canvas)
 
     def checkAdj(self, boxX, boxY, dirX, dirY, player, count):
         newboxX = boxX + dirX
@@ -38,7 +31,6 @@ class GameMechs():
         if count == 5:
             return True
         elif self.boardGrid[newboxX][newboxY] == player and self.validIndex(newboxX, newboxY):
-            print(count)
             return self.checkAdj(newboxX, newboxY, dirX, dirY, player, count + 1)
         else:
             return False
@@ -51,4 +43,22 @@ class GameMechs():
 
     #declares winner and prompts user to restart, return to menu, or quit
     def winner(self, player):
-        return player
+        canvas.unbind("<Button-1>")
+        winDow = Tk()
+        winDow.geometry("500x500")
+        winDow.title("WINNER!")
+
+        #set frame
+        winFrame = Frame(winDow, width = 100, height = 100)
+
+        #declare winner
+        Label(winFrame, text = "The winner is player " + str(player + 1) + "!").pack()
+
+        #buttons inside winner menu
+        Button(winFrame, text = "Restart", command = lambda: restart).pack()
+        Button(winFrame, text = "Main Menu").pack()
+        Button(winFrame, text = "Quit").pack()
+
+        winFrame.pack()
+
+        winDow.mainloop()

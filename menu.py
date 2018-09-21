@@ -21,8 +21,8 @@ def mainMenu(menuWindow, oldFrame = 0):
 
     #buttons inside menu
     Button(menuFrame, text = "Single Player", command = lambda: boardSizeMenu(menuWindow, menuFrame, 1)).pack()
-    twoPlayersButton = Button(menuFrame, text = "Two Players", command = lambda: boardSizeMenu(menuWindow, menuFrame, 2)).pack()
-    quitButton = Button(menuFrame, text = "Quit", command = lambda: quit(menuWindow)).pack()
+    Button(menuFrame, text = "Two Players", command = lambda: boardSizeMenu(menuWindow, menuFrame, 2)).pack()
+    Button(menuFrame, text = "Quit", command = lambda: quit(menuWindow)).pack()
 
     #set menu
     menuFrame.pack()
@@ -65,4 +65,4 @@ def boardSize(value, menuWindow, boardFrame, playerNum):
     elif value == 2:
         startGame(playerNum, 17, menuWindow)
     else:
-        boardSizeMenu(menuWindow, boardFrame)
+        boardSizeMenu(menuWindow, boardFrame, playerNum)
