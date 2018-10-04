@@ -4,65 +4,78 @@ import ttk
 from singleplayer import singlePlayer
 from twoplayer import twoPlayers
 from gameboard import startGame
+from windowhelper import center
 
 #runs the main menu
-def mainMenu(menuWindow, oldFrame = 0):
-    #clear old frame
-    if oldFrame != 0:
-        oldFrame.pack_forget()
+class mainMenu():
 
-    #setting up menu
-    menuFrame = Frame(menuWindow, width = 100, height = 100)
+    def __init__(self):
+        self.menuWindow = Tk()
+        self.menuWindow.title("Gomoku")
+        pixels = 500
+        x, y = center(pixels, self.menuWindow)
+        self.menuWindow.geometry("%dx%d+%d+%d" % (pixels, pixels, x, y))
+        self.boardFrame = Frame(self.menuWindow)
+        self.setup()
 
-    #title
-    titleText = StringVar()
-    Label(menuFrame, textvariable = titleText).pack()
-    titleText.set("Gomoku")
+    def setup(self):
+        self.boardFrame.pack_forget()
 
-    #buttons inside menu
-    Button(menuFrame, text = "Single Player", command = lambda: boardSizeMenu(menuWindow, menuFrame, 1)).pack()
-    Button(menuFrame, text = "Two Players", command = lambda: boardSizeMenu(menuWindow, menuFrame, 2)).pack()
-    Button(menuFrame, text = "Quit", command = lambda: quit(menuWindow)).pack()
+        #setting up menu
+        self.menuFrame = Frame(self.menuWindow, width = 100, height = 100)
 
-    #set menu
-    menuFrame.pack()
+        #title
+        titleText = StringVar()
+        Label(self.menuFrame, textvariable = titleText).pack()
+        titleText.set("Gomoku")
 
-#quits window
-def quit(menuWindow):
-    menuWindow.destroy()
+        #buttons inside menu
+        Button(self.menuFrame, text = "Single Player", command = lambda: self.boardSizeMenu(1)).pack()
+        Button(self.menuFrame, text = "Two Players", command = lambda: self.boardSizeMenu(2)).pack()
+        Button(self.menuFrame, text = "Quit", command = lambda: self.quit()).pack()
 
-#runs the board size options
-def boardSizeMenu(menuWindow, oldFrame, playerNum):
-    #clearing old menu frame
-    if oldFrame != 0:
-        oldFrame.pack_forget()
+        #set menu
+        self.menuFrame.pack()
 
-    #setting up menu
-    boardFrame = Frame(menuWindow, width = 100, height = 100)
+        self.menuWindow.mainloop()
 
-    #title
-    titleText = StringVar()
-    Label(boardFrame, textvariable = titleText).pack()
-    titleText.set("Select a board size")
+    #quits window
+    def quit(self):
+        self.menuWindow.destroy()
 
-    #buttons inside menu
-    board = IntVar()
-    boardSmall = Radiobutton(boardFrame, text = "15 x 15", variable = board, value = 1)
-    boardLarge = Radiobutton(boardFrame, text = "17 x 17", variable = board, value = 2)
-    Button(boardFrame, text = "Confirm", command = lambda: boardSize(board.get(), menuWindow, boardFrame, playerNum)).pack()
-    Button(boardFrame, text = "Back", command = lambda: mainMenu(menuWindow, boardFrame)).pack()
-    #CAUTION: Can possibly overload menu window with lots of frames
+    #runs the board size options
+    def boardSizeMenu(self, playerNum):
+        self.menuFrame.pack_forget()
+        self.boardFrame.pack_forget()
 
-    #set menu
-    boardSmall.pack()
-    boardLarge.pack()
-    boardFrame.pack()
+        self.playerNum = playerNum
 
-#starts the game using board size user selected
-def boardSize(value, menuWindow, boardFrame, playerNum):
-    if value == 1:
-        startGame(playerNum, 15, menuWindow)
-    elif value == 2:
-        startGame(playerNum, 17, menuWindow)
-    else:
-        boardSizeMenu(menuWindow, boardFrame, playerNum)
+        #setting up menu
+        self.boardFrame = Frame(self.menuWindow, width = 100, height = 100)
+
+        #title
+        titleText = StringVar()
+        Label(self.boardFrame, textvariable = titleText).pack()
+        titleText.set("Select a board size")
+
+        #buttons inside menu
+        board = IntVar()
+        boardSmall = Radiobutton(self.boardFrame, text = "15 x 15", variable = board, value = 1)
+        boardLarge = Radiobutton(self.boardFrame, text = "17 x 17", variable = board, value = 2)
+        Button(self.boardFrame, text = "Confirm", command = lambda: self.boardSize(board.get())).pack()
+        Button(self.boardFrame, text = "Back", command = lambda: self.setup()).pack()
+        #CAUTION: Can possibly overload menu window with lots of frames
+
+        #set menu
+        boardSmall.pack()
+        boardLarge.pack()
+        self.boardFrame.pack()
+
+    #starts the game using board size user selected
+    def boardSize(self, value):
+        if value == 1:
+            startGame(self.playerNum, 15, self.menuWindow)
+        elif value == 2:
+            startGame(self.playerNum, 17, self.menuWindow)
+        else:
+            self.boardSizeMenu(self.playerNum)
