@@ -1,6 +1,6 @@
-def center(pixels, window):
+def center(pixelsX, pixelsY, window):
     screenWidth = window.winfo_screenwidth()
     screenHeight = window.winfo_screenheight()
-    x = (screenWidth / 2) - (pixels / 2)
-    y = (screenHeight / 2) - (pixels / 2)
+    x = (screenWidth / 2) - (pixelsX / 2)
+    y = (screenHeight / 2) - (pixelsY / 2)
     return x, y

@@ -18,7 +18,7 @@ class Board():
             pixels = 480
         else:
             pixels = 544
-        x, y = center(pixels, self.gameWindow)
+        x, y = center(pixels, pixels, self.gameWindow)
         self.gameWindow.geometry("%dx%d+%d+%d" % (pixels, pixels, x, y))
         self.canvasWidth = boardSize * self.squareSize
         self.canvasHeight = boardSize * self.squareSize
@@ -104,21 +104,21 @@ class Board():
     def winner(self):
         self.canvas.unbind("<Button-1>")
         self.winDow = Tk()
-        pixels = 500
-        x, y = center(pixels, self.winDow)
-        self.winDow.geometry("%dx%d+%d+%d" % (pixels, pixels, x, y))
+        pixelsX = 200
+        pixelsY = 100
+        x, y = center(pixelsX, pixelsY, self.winDow)
+        self.winDow.geometry("%dx%d+%d+%d" % (pixelsX, pixelsY, x, y))
         self.winDow.title("WINNER!")
 
         #set frame
         winFrame = Frame(self.winDow, width = 100, height = 100)
 
         #declare winner
-        Label(winFrame, text = "The winner is player " + str(self.player + 1) + "!").pack()
+        Label(winFrame, text = "The winner is player " + str(self.player + 1) + "!", font = "TKTEXTFONT 20").pack()
 
         #buttons inside winner menu
         Button(winFrame, text = "Restart", command = lambda: self.restart()).pack()
         Button(winFrame, text = "Main Menu", command = lambda: self.returnMain()).pack()
-        Button(winFrame, text = "Quit").pack()
 
         winFrame.pack()
 

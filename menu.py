@@ -8,13 +8,15 @@ from windowhelper import center
 
 #runs the main menu
 class mainMenu():
+    quit = False
 
     def __init__(self):
         self.menuWindow = Tk()
         self.menuWindow.title("Gomoku")
-        pixels = 500
-        x, y = center(pixels, self.menuWindow)
-        self.menuWindow.geometry("%dx%d+%d+%d" % (pixels, pixels, x, y))
+        pixelsX = 250
+        pixelsY = 135
+        x, y = center(pixelsX, pixelsY, self.menuWindow)
+        self.menuWindow.geometry("%dx%d+%d+%d" % (pixelsX, pixelsY, x, y))
         self.boardFrame = Frame(self.menuWindow)
         self.setup()
 
@@ -26,22 +28,33 @@ class mainMenu():
 
         #title
         titleText = StringVar()
-        Label(self.menuFrame, textvariable = titleText).pack()
+        label = Label(self.menuFrame, textvariable = titleText, font = "TKTEXTFONT 20", anchor = CENTER)
         titleText.set("Gomoku")
 
         #buttons inside menu
-        Button(self.menuFrame, text = "Single Player", command = lambda: self.boardSizeMenu(1)).pack()
-        Button(self.menuFrame, text = "Two Players", command = lambda: self.boardSizeMenu(2)).pack()
-        Button(self.menuFrame, text = "Quit", command = lambda: self.quit()).pack()
+        button1 = Button(self.menuFrame, text = "Single Player", command = lambda: self.boardSizeMenu(1))
+        button2 = Button(self.menuFrame, text = "Two Players", command = lambda: self.boardSizeMenu(2))
+        button3 = Button(self.menuFrame, text = "Quit", command = lambda: self.quit())
 
         #set menu
+        label.pack()
+        button1.pack()
+        button2.pack()
+        button3.pack()
         self.menuFrame.pack()
+
+        #makes sure window closes
+        self.menuWindow.protocol("WM_DELETE_WINDOW", self.quit)
 
         self.menuWindow.mainloop()
 
     #quits window
     def quit(self):
         self.menuWindow.destroy()
+        self.quit = True
+
+    def getquit(self):
+        return self.quit
 
     #runs the board size options
     def boardSizeMenu(self, playerNum):
