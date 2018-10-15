@@ -9,6 +9,7 @@ class Board():
     squareSize = 32
     canvasWidth = 480
     canvasHeight = 480
+    quit = False
 
     def __init__(self, boardSize):
         #creating new game window
@@ -38,7 +39,16 @@ class Board():
 
         self.canvas.pack(side = "top", fill = "both", expand = True)
 
+        self.gameWindow.protocol("WM_DELETE_WINDOW", self.quit)
+
         self.gameWindow.mainloop()
+
+    def quit(self):
+        self.gameWindow.destroy()
+        self.quit = 0
+
+    def getquit(self):
+        return self.quit
 
     def click(self, event):
         boxX = self.pixelsToBoxes(event.x)
